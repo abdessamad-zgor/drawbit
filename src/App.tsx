@@ -1,12 +1,18 @@
 import './App.css'
-import Scene from './components/Scene'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from './views/Home'
+import Editor from './views/Editor'
+
 
 function App() {
 
   return (
-    <>
-      <Scene/>
-    </>
+    <Router>
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/editor" element={<Editor />} />
+      </Routes>
+    </Router>
   )
 }
 
