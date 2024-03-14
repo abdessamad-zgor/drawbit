@@ -2,6 +2,17 @@ import { create } from "zustand"
 import { persist } from "zustand/middleware"
 import { Scene, FrameData } from "./types"
 
+function initFrame(demX: number, demY: number) {
+  let arr = []
+  for (let i = 0; i < demY; i++) {
+    arr = [...arr, []]
+    for (let j = 0; j < demX; j++) {
+      arr[i] = [...arr[i], null]
+    }
+  }
+  return arr
+}
+
 
 export let sceneStore = create<Scene>()(
   persist((set) => ({
@@ -12,7 +23,8 @@ export let sceneStore = create<Scene>()(
       console.log("frame " + index + " :", tileIndex)
       set(s => {
         let newFrames = [...s.frames]
-        newFrames[index][tileIndex[0]][tileIndex[1]] = s.color
+        newFrames[index][tileIndex[1]][tileIndex[0]] = s.color
+        console.log(newFrames)
         return {
           ...s,
           frames: newFrames
@@ -22,7 +34,7 @@ export let sceneStore = create<Scene>()(
     initFrame: (index: number, demX: number, demY: number) => {
       set(s => ({
         ...s,
-        frames: s.frames.map((f, i) => index == i ? Array(demY).fill(Array(demX).fill(null)) : f)
+        frames: s.frames.map((f, i) => index == i ? initFrame(demX, demY) : f)
       }))
     },
     addFrame: (index?: number) => {

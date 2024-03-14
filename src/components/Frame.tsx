@@ -25,6 +25,7 @@ const Frame: React.FC<FrameProptypes> = ({ index, demX, demY, unit, frame }) => 
                     _ =>
                       <div
                         style={{ height: `${unit}px`, width: `${unit}px` }}
+                        className='border-b border-r'
                         onMouseMove={drawStroke}
                         onMouseDown={startStroke}
                       >

@@ -31,7 +31,6 @@ const useScene = () => {
     color,
     addFrame,
     updateFrame,
-    updateName,
     deleteFrame,
     updateNameListener
   }

@@ -13,7 +13,7 @@ function Scene() {
         frames.map(
           (f, i) =>
             <div className='flex flex-col'>
-              <Frame demX={50} demY={50} unit={10} frame={f[0].length == 0 ? undefined : f} index={i} />
+              <Frame demX={30} demY={15} unit={20} frame={f[0].length == 0 ? undefined : f} index={i} />
               {/* FrameActions Component */}
               <div className='flex flex-row justify-end p-px gap-3'>
                 <button className='bg-stone-200 text-center text-3xl font-bold' onClick={() => deleteFrame(i)} >

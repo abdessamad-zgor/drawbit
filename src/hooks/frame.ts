@@ -27,12 +27,13 @@ const useFrameDraw = (index: number, demX: number, demY: number, unit: number, f
       let targetRect = e.currentTarget.getBoundingClientRect();
 
       let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
-      let [xInd, yInd] = [Math.ceil(x / unit), Math.ceil(y / unit)];
-      //console.log(xInd, yInd)
-      updateFrame(index, [xInd, yInd])
 
       canvasContext.fillStyle = color
       canvasContext.fillRect(x, y, unit, unit)
+
+      let [xInd, yInd] = [Math.ceil(x / unit), Math.ceil(y / unit)];
+      console.log(xInd, yInd)
+      updateFrame(index, [xInd, yInd])
     }
   }
 

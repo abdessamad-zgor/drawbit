@@ -1,6 +1,5 @@
-import React from 'react'
-import { sceneStore as scene } from '../state/scene'
 import Logo from './Logo'
+import ExportIcon from "../assets/export.svg"
 import useScene from '../hooks/scene'
 
 function EditorBar() {
@@ -8,11 +7,15 @@ function EditorBar() {
   return (
     <nav className='px-12 py-4 shadow bg-white/95 flex flex-row'>
       <Logo />
-      <div className='flex justify-end w-full'>
+      <div className='flex justify-end w-full gap-4'>
         <input type="text" value={name} onChange={updateNameListener} className='p-2 border rounded w-1/12' />
         <div className='flex flex-row gap-4'>
-          <button className=''></button>
+          <button className='flex justify-center items-center px-4 shadow gap-2 border rounded'>
+            <img src={ExportIcon} alt="export icon" className='w-[1em] h-[1em]' />
+            <span>Export</span>
+          </button>
         </div>
+
       </div>
     </nav>
   )
