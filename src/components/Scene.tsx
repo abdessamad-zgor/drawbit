@@ -8,7 +8,7 @@ import TrashIcon from "../assets/trash.svg"
 function Scene() {
   const { frames, addFrame, deleteFrame } = useScene()
   return (
-    <div className='flex flex-col justify-center items-center bg-stone-200'>
+    <div className='flex flex-col justify-center items-center '>
       {
         frames.map(
           (f, i) =>
