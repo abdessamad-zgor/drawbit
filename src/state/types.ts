@@ -20,8 +20,9 @@ export interface Scene {
   frames: FrameData[];
   name: string;
   color: HexColor;
-  //hasData: () => boolean;
-  updateFrame: (index: number, data: FrameData) => void;
+  initFrame: (index: number, demX: number, demY: number) => void;
+  updateFrame: (index: number, tileIndex: [number, number]) => void;
   addFrame: (index: number) => void;
   deleteFrame: (index: number) => void;
+  updateName: (name: string) => void;
 }

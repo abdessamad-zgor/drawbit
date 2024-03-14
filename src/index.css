@@ -2,3 +2,8 @@
 @tailwind variants;
 @tailwind utilities;
 @tailwind components;
+
+input,
+textarea {
+  outline: none;
+}

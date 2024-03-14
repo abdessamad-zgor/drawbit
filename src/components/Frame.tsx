@@ -1,6 +1,6 @@
 import React from 'react'
-import { useFrameDraw } from '../store/actions'
-import { FrameData } from '../store/types'
+import useFrameDraw from '../hooks/frame'
+import { FrameData } from '../state/types'
 
 type FrameProptypes = {
   demX: number;
@@ -18,11 +18,11 @@ const Frame: React.FC<FrameProptypes> = ({ index, demX, demY, unit, frame }) => 
       <div className='absolute flex flex-row w-full inset-0 z-10'>
         {
           Array(demX).fill(0).map(
-            i =>
+            _ =>
               <div className='flex flex-col' style={{ width: `${unit}px` }}>
                 {
                   Array(demY).fill(0).map(
-                    j =>
+                    _ =>
                       <div
                         style={{ height: `${unit}px`, width: `${unit}px` }}
                         onMouseMove={drawStroke}
