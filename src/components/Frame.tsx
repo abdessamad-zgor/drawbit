@@ -14,7 +14,7 @@ const Frame: React.FC<FrameProptypes> = ({ index, demX, demY, unit, frame }) => 
   const { startStroke, drawStroke, endStroke, canvasRef } = useFrameDraw(index, demX, demY, unit, frame ?? null)
 
   return (
-    <div className='relative w-fit border rounded bg-white border-stone-300' onMouseUp={endStroke}>
+    <div className='relative z-0 w-fit border rounded bg-white border-stone-300 ' onMouseUp={endStroke}>
       <div className='absolute flex flex-row w-full inset-0 z-10'>
         {
           Array(demX).fill(0).map(
@@ -25,7 +25,7 @@ const Frame: React.FC<FrameProptypes> = ({ index, demX, demY, unit, frame }) => 
                     _ =>
                       <div
                         style={{ height: `${unit}px`, width: `${unit}px` }}
-                        className='border-b border-r'
+                        className='border-b border-r border-stone-200'
                         onMouseMove={drawStroke}
                         onMouseDown={startStroke}
                       >

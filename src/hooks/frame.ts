@@ -16,7 +16,22 @@ const useFrameDraw = (index: number, demX: number, demY: number, unit: number, f
   }, [canvasRef.current]);
 
 
-  const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => setIsStroke(true)
+  const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
+    setIsStroke(true)
+    let canvasContext = canvasRef.current.getContext("2d");
+    // get element position within canvas
+    let canvasRect = canvasRef.current.getBoundingClientRect();
+    let targetRect = e.currentTarget.getBoundingClientRect();
+
+    let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
+
+    canvasContext.fillStyle = color
+    canvasContext.fillRect(x, y, unit, unit)
+
+    let [xInd, yInd] = [Math.ceil(x / unit), Math.ceil(y / unit)];
+    console.log(xInd, yInd)
+    updateFrame(index, [xInd, yInd])
+  }
   const onMouseUp: MouseEventHandler<HTMLDivElement> = (e) => setIsStroke(false)
 
   const onMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {

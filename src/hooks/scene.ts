@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { sceneStore as scene } from "../state/scene";
 
 const useScene = () => {
@@ -20,6 +20,15 @@ const useScene = () => {
       updateName: s.updateName,
       deleteFrame: s.deleteFrame
     }))
+  const [dimensions, setDimensions] = useState<[number, number]>([30, 15]);
+  const [unit, setUnit] = useState<number>(20)
+
+  useEffect(() => {
+    if (document) {
+      let sceneElement = document.getElementById('scene');
+      sceneElement.style.paddingBlock = `${dimensions[1] * unit / 3}px`
+    }
+  }, [])
 
   const updateNameListener: ChangeEventHandler<HTMLInputElement> = (e) => {
     updateName(e.target.value)
@@ -32,7 +41,10 @@ const useScene = () => {
     addFrame,
     updateFrame,
     deleteFrame,
-    updateNameListener
+    updateNameListener,
+    demX: dimensions[0],
+    demY: dimensions[1],
+    unit
   }
 }
 
