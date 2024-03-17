@@ -15,6 +15,10 @@ function EditorBar() {
           <button className='flex justify-center items-center px-4 shadow gap-2 border rounded'>
             <img src={ExportIcon} alt="export icon" className='w-[1em] h-[1em]' />
             <span>Export</span>
+
+            <div className='rounded shadow-lg p-4'>
+
+            </div>
           </button>
         </div>
       </div>

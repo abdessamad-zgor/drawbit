@@ -1,0 +1,44 @@
+import { useState, useEffect, MouseEventHandler } from "react";
+import {sceneStore as scene} from "../state/scene";
+import { HexColor } from "../state/types";
+import { ColorChangeHandler } from "react-color";
+
+const useColor = ()=>{
+  const {color, updateColor} = scene(s=>({color: s.color, updateColor: s.updateColor}))
+  const [togglePicker, setTogglePicker] = useState<boolean>(false)
+  const [suggestedColors, setSuggestedColors] = useState<HexColor[]>([
+    '#008080',
+    '#800080',
+    '#FFA500',
+    '#FFC0CB',
+    '#40E0D0',
+    '#00FF00',
+    '#4B0082'
+  ])
+
+  const handlePickerChange: ColorChangeHandler = (color, _)=>{
+    setSuggestedColors([color.hex as HexColor, ...suggestedColors.slice(0, suggestedColors.length-1)])
+    updateColor(color.hex)
+  }
+
+  const togglePickerHandler = ()=>{
+    setTogglePicker(!togglePicker)
+  }
+
+  const pickColor: MouseEventHandler<HTMLDivElement> = (e)=>{
+    let colorCode = e.currentTarget?.getAttribute("hex-code") as HexColor;
+    setSuggestedColors([color, ...suggestedColors.filter(c=>c!=colorCode)])
+    updateColor(colorCode)
+  }
+
+  return {
+    color,
+    suggestedColors,
+    handlePickerChange,
+    pickColor,
+    togglePickerHandler,
+    togglePicker
+  }
+}
+
+export default useColor;

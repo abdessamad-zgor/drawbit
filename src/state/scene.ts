@@ -1,6 +1,7 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
-import { Scene, FrameData } from "./types"
+import { Scene, FrameData, HexColor } from "./types"
+import { Color } from "react-color"
 
 function initFrame(demX: number, demY: number) {
   let arr = []
@@ -44,7 +45,9 @@ export let sceneStore = create<Scene>()(
       set(s => ({ ...s, frames: [...s.frames].filter((_, i) => i != index) }))
     },
     updateName: (name: string) =>
-      set(s => ({ ...s, name }))
+      set(s => ({ ...s, name })),
+    updateColor: (color: string | Color | HexColor)=>
+      set(s => ({...s, color: color as HexColor}))
   }), { name: "drawbit-data-11" })
 )
 

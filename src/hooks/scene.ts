@@ -10,6 +10,7 @@ const useScene = () => {
     updateFrame,
     updateName,
     deleteFrame,
+    updateColor,
   } = scene(
     s => ({
       name: s.name,
@@ -18,7 +19,8 @@ const useScene = () => {
       addFrame: s.addFrame,
       updateFrame: s.updateFrame,
       updateName: s.updateName,
-      deleteFrame: s.deleteFrame
+      deleteFrame: s.deleteFrame,
+      updateColor: s.updateColor
     }))
   const [dimensions, setDimensions] = useState<[number, number]>([30, 15]);
   const [unit, setUnit] = useState<number>(20)
@@ -40,6 +42,7 @@ const useScene = () => {
     color,
     addFrame,
     updateFrame,
+    updateColor,
     deleteFrame,
     updateNameListener,
     demX: dimensions[0],

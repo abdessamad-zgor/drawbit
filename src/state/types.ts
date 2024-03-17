@@ -1,3 +1,4 @@
+import { Color } from "react-color";
 import { z } from "zod";
 
 const hexColorSchema = z.custom<`#${string}`>((val) => {
@@ -25,4 +26,5 @@ export interface Scene {
   addFrame: (index: number) => void;
   deleteFrame: (index: number) => void;
   updateName: (name: string) => void;
+  updateColor: (color: string | Color | HexColor ) => void
 }
