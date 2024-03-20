@@ -1,3 +1,4 @@
+import { MutableRefObject } from "react";
 import { Color } from "react-color";
 import { z } from "zod";
 
@@ -21,10 +22,13 @@ export interface Scene {
   frames: FrameData[];
   name: string;
   color: HexColor;
+  refs: MutableRefObject<HTMLCanvasElement>[];
   initFrame: (index: number, demX: number, demY: number) => void;
   updateFrame: (index: number, tileIndex: [number, number]) => void;
   addFrame: (index: number) => void;
   deleteFrame: (index: number) => void;
   updateName: (name: string) => void;
-  updateColor: (color: string | Color | HexColor ) => void
+  updateColor: (color: string | Color | HexColor) => void;
+  setCanvasRef: (index: number, ref: MutableRefObject<HTMLCanvasElement>) => void
 }
+

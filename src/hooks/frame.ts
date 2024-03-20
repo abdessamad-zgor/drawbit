@@ -5,7 +5,7 @@ import { sceneStore as scene } from "../state/scene"
 const useFrameDraw = (index: number, demX: number, demY: number, unit: number, frame: FrameData) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isStroke, setIsStroke] = useState<boolean>(false);
-  const { updateFrame, initFrame, color } = scene(s => ({ updateFrame: s.updateFrame, initFrame: s.initFrame, color: s.color }));
+  const { updateFrame, initFrame, setCanvasRef, color } = scene(s => ({ updateFrame: s.updateFrame, initFrame: s.initFrame, setCanvasRef: s.setCanvasRef, color: s.color }));
   // this will be reimplemented in Scene as a seprate component and state
 
   useEffect(() => {
@@ -13,6 +13,7 @@ const useFrameDraw = (index: number, demX: number, demY: number, unit: number, f
       drawFrame(frame)
     else if (!frame)
       initFrame(index, demX, demY)
+    setCanvasRef(index, canvasRef)
   }, [canvasRef.current]);
 
 

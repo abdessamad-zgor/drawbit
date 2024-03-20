@@ -1,3 +1,4 @@
+import { MutableRefObject } from "react"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 import { Scene, FrameData, HexColor } from "./types"
@@ -18,6 +19,7 @@ function initFrame(demX: number, demY: number) {
 export let sceneStore = create<Scene>()(
   persist((set) => ({
     frames: [[[]]],
+    refs: [],
     color: "#000",
     name: "Untitled",
     updateFrame: (index: number, tileIndex: [number, number]) => {
@@ -35,19 +37,38 @@ export let sceneStore = create<Scene>()(
     initFrame: (index: number, demX: number, demY: number) => {
       set(s => ({
         ...s,
-        frames: s.frames.map((f, i) => index == i ? initFrame(demX, demY) : f)
+        frames: s.frames.map((f, i) => index == i ? initFrame(demX, demY) : f),
+        refs: [null]
       }))
     },
     addFrame: (index?: number) => {
-      set(s => ({ ...s, frames: index && index != s.frames.length - 1 ? [...s.frames.slice(0, index + 1), [[]], ...s.frames.slice(index + 1)] : [...s.frames, [[]]] }))
+      set(s => ({
+        ...s,
+        frames: index && index != s.frames.length - 1 ?
+          [...s.frames.slice(0, index + 1), [[]], ...s.frames.slice(index + 1)] :
+          [...s.frames, [[]]],
+        refs: index && index != s.refs.length - 1 ?
+          [...s.refs.slice(0, index + 1), null, ...s.refs.slice(index + 1)] :
+          [...s.refs, null]
+      }))
     },
     deleteFrame: (index: number) => {
-      set(s => ({ ...s, frames: [...s.frames].filter((_, i) => i != index) }))
+      set(s => ({
+        ...s,
+        frames: [...s.frames].filter((_, i) => i != index),
+        refs: [...s.refs].filter((_, i) => i != index)
+      }))
     },
     updateName: (name: string) =>
       set(s => ({ ...s, name })),
-    updateColor: (color: string | Color | HexColor)=>
-      set(s => ({...s, color: color as HexColor}))
-  }), { name: "drawbit-data-11" })
+    updateColor: (color: string | Color | HexColor) =>
+      set(s => ({ ...s, color: color as HexColor })),
+    setCanvasRef: (index: number, ref: MutableRefObject<HTMLCanvasElement>) =>
+      set(s => ({ ...s, refs: [...s.refs, ref] }))
+  }),
+    {
+      name: "drawbit-data-11",
+    }
+  )
 )
 

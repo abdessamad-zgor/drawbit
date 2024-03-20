@@ -10,7 +10,7 @@ function Editor() {
     console.log(frames)
   }, [])
   return (
-    <div className='relative w-full min-h-screen bg-stone-200 flex flex-col justify-center items-center'>
+    <div className='relative w-full min-h-screen bg-stone-200 flex flex-col justify-between items-center'>
       <EditorBar />
       <Scene />
       <Toolbar />

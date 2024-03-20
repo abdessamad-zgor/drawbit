@@ -7,7 +7,7 @@ import useExport from '../hooks/exports'
 
 function EditorBar() {
   const { name, updateNameListener } = useScene()
-  const { open, transparentBg, toggleExport, toggleTransparency } = useExport()
+  const { open, transparentBg, toggleExport, toggleTransparency, downloadPng } = useExport()
   return (
     <nav className='px-12 py-4 shadow z-10 bg-white flex flex-row sticky left-0 right-0 top-0 w-full'>
       <Logo />
@@ -25,6 +25,7 @@ function EditorBar() {
                     <input type='checkbox' checked={transparentBg} onChange={toggleTransparency} />
                     {" "}Set transparent background.
                   </div>
+                  <button onClick={downloadPng}>Download</button>
                 </div>
                 :
                 <></>
