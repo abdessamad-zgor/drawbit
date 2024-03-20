@@ -1,6 +1,6 @@
 import React from 'react'
-import Frame from './Frame'
 import useScene from '../hooks/scene'
+import Frame from './Frame'
 import PlusIcon from "../assets/plus-square.svg"
 import TrashIcon from "../assets/trash.svg"
 
@@ -14,7 +14,7 @@ function Scene() {
           (f, i) =>
             <div className='flex flex-col'>
               <div className='flex flex-col m-4'>
-                <Frame demX={demX} demY={15} unit={20} frame={f[0].length == 0 ? undefined : f} index={i} />
+                <Frame demX={demX} demY={demY} unit={unit} frame={f[0].length == 0 ? undefined : f} index={i} />
                 {/* FrameActions Component */}
                 <div className='flex flex-row justify-end p-px gap-3'>
                   <button className='bg-stone-200 text-center text-3xl font-bold' onClick={() => deleteFrame(i)} >

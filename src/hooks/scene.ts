@@ -22,8 +22,8 @@ const useScene = () => {
       deleteFrame: s.deleteFrame,
       updateColor: s.updateColor
     }))
-  const [dimensions, setDimensions] = useState<[number, number]>([30, 15]);
-  const [unit, setUnit] = useState<number>(20)
+  const [dimensions, setDimensions] = useState<[number, number]>([100, 50]);
+  const [unit, setUnit] = useState<number>(5)
 
   useEffect(() => {
     if (document) {
