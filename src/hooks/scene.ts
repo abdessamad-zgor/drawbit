@@ -11,6 +11,8 @@ const useScene = () => {
     updateName,
     deleteFrame,
     updateColor,
+    refs,
+    setCanvasRef,
   } = scene(
     s => ({
       name: s.name,
@@ -20,7 +22,9 @@ const useScene = () => {
       updateFrame: s.updateFrame,
       updateName: s.updateName,
       deleteFrame: s.deleteFrame,
-      updateColor: s.updateColor
+      updateColor: s.updateColor,
+      refs: s.refs,
+      setCanvasRef: s.setCanvasRef
     }))
   const [dimensions, setDimensions] = useState<[number, number]>([100, 50]);
   const [unit, setUnit] = useState<number>(5)
@@ -30,7 +34,12 @@ const useScene = () => {
       let sceneElement = document.getElementById('scene');
       sceneElement.style.paddingBlock = `${dimensions[1] * unit / 3}px`
     }
+    console.log(refs)
   }, [])
+
+  useEffect(() => {
+    console.log(refs)
+  }, [refs])
 
   const updateNameListener: ChangeEventHandler<HTMLInputElement> = (e) => {
     updateName(e.target.value)
@@ -47,7 +56,9 @@ const useScene = () => {
     updateNameListener,
     demX: dimensions[0],
     demY: dimensions[1],
-    unit
+    unit,
+    refs,
+    setCanvasRef
   }
 }
 

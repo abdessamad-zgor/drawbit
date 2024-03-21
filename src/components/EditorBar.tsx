@@ -1,6 +1,7 @@
 import { MouseEventHandler } from 'react'
 import Logo from './Logo'
 import ExportIcon from '../assets/export.svg'
+import DownloadIcon from '../assets/download.svg'
 
 import useScene from '../hooks/scene'
 import useExport from '../hooks/exports'
@@ -14,8 +15,8 @@ function EditorBar() {
       <div className='flex justify-end w-full gap-4'>
         <input type="text" value={name} onChange={updateNameListener} className='p-2 border rounded w-1/12' />
         <div className='flex flex-row gap-4'>
-          <button onClick={toggleExport} className='bg-teal-800 text-white flex justify-center relative items-center px-4 shadow gap-2 rounded-lg'>
-            <img src={ExportIcon} alt="export icon" className='w-[1em] h-[1em]' />
+          <button onClick={toggleExport} className='bg-teal-800 text-white flex justify-center relative items-center px-8 shadow gap-2 rounded-lg'>
+            <img src={ExportIcon} alt="export icon" className='w-[1.5em]' />
             <span>Export</span>
 
             {
@@ -25,7 +26,10 @@ function EditorBar() {
                     <input type='checkbox' checked={transparentBg} onChange={toggleTransparency} />
                     {" "}Set transparent background.
                   </div>
-                  <button onClick={downloadPng}>Download</button>
+                  <button onClick={downloadPng} className='bg-black shadow my-2 rounded-lg py-2 border w-full flex justify-center gap-4 items-center'>
+                    <img src={DownloadIcon} alt="download icon" className='w-[1.5em]' />
+                    <span className='text-white'> Download </span>
+                  </button>
                 </div>
                 :
                 <></>

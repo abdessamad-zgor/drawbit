@@ -1,10 +1,11 @@
 import { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import { sceneStore as scene } from "../state/scene";
+import useScene from "./scene";
 
 const useExport = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [transparentBg, setTransparentBg] = useState<boolean>(false)
-  const { frames, refs } = scene(s => ({ frames: s.frames, refs: s.refs }))
+  const { name, refs, frames } = useScene()
 
   const toggleExport: MouseEventHandler<HTMLButtonElement> = () => {
     setOpen(!open)
@@ -15,13 +16,11 @@ const useExport = () => {
   }
 
   const downloadPng: MouseEventHandler = () => {
-    let imageData = refs[0].current.toDataURL()
+    let canvas = document.getElementById(refs[0]) as HTMLCanvasElement;
+    let image = canvas.toDataURL();
     let aDownloadLink = document.createElement('a');
-    // Add the name of the file to the link
     aDownloadLink.download = 'canvas_image.png';
-    // Attach the data to the link
-    aDownloadLink.href = imageData;
-    // Get the code to click the download link
+    aDownloadLink.href = image;
     aDownloadLink.click();
   }
 

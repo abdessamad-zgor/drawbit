@@ -47,9 +47,6 @@ export let sceneStore = create<Scene>()(
         frames: index && index != s.frames.length - 1 ?
           [...s.frames.slice(0, index + 1), [[]], ...s.frames.slice(index + 1)] :
           [...s.frames, [[]]],
-        refs: index && index != s.refs.length - 1 ?
-          [...s.refs.slice(0, index + 1), null, ...s.refs.slice(index + 1)] :
-          [...s.refs, null]
       }))
     },
     deleteFrame: (index: number) => {
@@ -63,8 +60,15 @@ export let sceneStore = create<Scene>()(
       set(s => ({ ...s, name })),
     updateColor: (color: string | Color | HexColor) =>
       set(s => ({ ...s, color: color as HexColor })),
-    setCanvasRef: (index: number, ref: MutableRefObject<HTMLCanvasElement>) =>
-      set(s => ({ ...s, refs: [...s.refs, ref] }))
+    setCanvasRef: (index: number, ref: string) =>
+      set(s => ({
+        ...s,
+        refs: s.refs.length == s.frames.length ?
+          s.refs.map((r, i) => i == index ? ref : r) :
+          index != s.refs.length - 1 ?
+            [...s.refs.slice(0, index + 1), ref, ...s.refs.slice(index + 1)] :
+            [...s.refs, ref]
+      }))
   }),
     {
       name: "drawbit-data-11",
