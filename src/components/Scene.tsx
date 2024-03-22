@@ -16,7 +16,7 @@ function Scene() {
               <div className='flex flex-col m-4'>
                 <Frame demX={demX} demY={demY} unit={unit} frame={f[0].length == 0 ? undefined : f} index={i} />
                 {/* FrameActions Component */}
-                <div className='flex flex-row justify-end p-px gap-3'>
+                <div className='flex flex-row justify-end p-px gap-3 frame-actions'>
                   <button className='bg-stone-200 text-center text-3xl font-bold' onClick={() => deleteFrame(i)} >
                     <img src={TrashIcon} className='w-[1em] h-[1em]' />
                   </button>

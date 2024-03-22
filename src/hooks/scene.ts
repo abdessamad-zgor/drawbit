@@ -1,5 +1,6 @@
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { sceneStore as scene } from "../state/scene";
+import useZoom from './zoom'
 
 const useScene = () => {
   const {
@@ -27,19 +28,18 @@ const useScene = () => {
       setCanvasRef: s.setCanvasRef
     }))
   const [dimensions, setDimensions] = useState<[number, number]>([100, 50]);
-  const [unit, setUnit] = useState<number>(5)
+  const { unit } = useZoom()
 
   useEffect(() => {
     if (document) {
       let sceneElement = document.getElementById('scene');
       sceneElement.style.paddingBlock = `${dimensions[1] * unit / 3}px`
     }
-    console.log(refs)
   }, [])
 
   useEffect(() => {
-    console.log(refs)
-  }, [refs])
+    console.log("unit :", unit)
+  }, [unit])
 
   const updateNameListener: ChangeEventHandler<HTMLInputElement> = (e) => {
     updateName(e.target.value)
@@ -58,7 +58,7 @@ const useScene = () => {
     demY: dimensions[1],
     unit,
     refs,
-    setCanvasRef
+    setCanvasRef,
   }
 }
 

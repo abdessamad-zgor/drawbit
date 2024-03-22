@@ -1,6 +1,7 @@
 import React from 'react'
-import useFrameDraw from '../hooks/frame'
 import { FrameData } from '../state/types'
+import useFrameDraw from '../hooks/frame'
+import useZoom from '../hooks/zoom'
 
 type FrameProptypes = {
   demX: number;
@@ -12,6 +13,9 @@ type FrameProptypes = {
 
 const Frame: React.FC<FrameProptypes> = ({ index, demX, demY, unit, frame }) => {
   const { startStroke, drawStroke, endStroke, canvasRef, frameId } = useFrameDraw(index, demX, demY, unit, frame ?? null)
+
+
+  const [canvasWidth, canvasHeight] = [demX * unit, demY * unit]
 
   return (
     <div className='relative z-0 w-fit border rounded bg-white border-stone-300 '
@@ -39,7 +43,7 @@ const Frame: React.FC<FrameProptypes> = ({ index, demX, demY, unit, frame }) => 
           )
         }
       </div>
-      <canvas ref={canvasRef} id={frameId} className='relative z-0' width={demX * unit} height={demY * unit}></canvas>
+      <canvas ref={canvasRef} id={frameId} className='relative z-0' width={canvasWidth} height={canvasHeight}></canvas>
     </div>
   )
 }

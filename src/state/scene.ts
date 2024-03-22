@@ -23,11 +23,9 @@ export let sceneStore = create<Scene>()(
     color: "#000",
     name: "Untitled",
     updateFrame: (index: number, tileIndex: [number, number]) => {
-      console.log("frame " + index + " :", tileIndex)
       set(s => {
         let newFrames = [...s.frames]
         newFrames[index][tileIndex[1]][tileIndex[0]] = s.color
-        console.log(newFrames)
         return {
           ...s,
           frames: newFrames
