@@ -1,18 +1,23 @@
 import React from 'react'
 import { FrameData } from '../state/types'
 import useFrameDraw from '../hooks/frame'
-import useZoom from '../hooks/zoom'
 
 type FrameProptypes = {
-  demX: number;
-  demY: number;
-  unit: number;
   index: number;
   frame?: FrameData;
 }
 
-const Frame: React.FC<FrameProptypes> = ({ index, demX, demY, unit, frame }) => {
-  const { startStroke, drawStroke, endStroke, canvasRef, frameId } = useFrameDraw(index, demX, demY, unit, frame ?? null)
+const Frame: React.FC<FrameProptypes> = ({ index, frame }) => {
+  const {
+    startStroke,
+    drawStroke,
+    endStroke,
+    canvasRef,
+    frameId,
+    unit,
+    demX,
+    demY
+  } = useFrameDraw(index, frame ?? null)
 
 
   const [canvasWidth, canvasHeight] = [demX * unit, demY * unit]

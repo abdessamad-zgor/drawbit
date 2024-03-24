@@ -21,8 +21,11 @@ export let sceneStore = create<Scene>()(
     frames: [[[]]],
     refs: [],
     color: "#000",
+    zoom: 100,
+    dimensions: [100, 50],
+    unit: 5,
     name: "Untitled",
-    updateFrame: (index: number, tileIndex: [number, number]) => {
+    setFrame: (index: number, tileIndex: [number, number]) => {
       set(s => {
         let newFrames = [...s.frames]
         newFrames[index][tileIndex[1]][tileIndex[0]] = s.color
@@ -54,9 +57,9 @@ export let sceneStore = create<Scene>()(
         refs: [...s.refs].filter((_, i) => i != index)
       }))
     },
-    updateName: (name: string) =>
+    setName: (name: string) =>
       set(s => ({ ...s, name })),
-    updateColor: (color: string | Color | HexColor) =>
+    setColor: (color: string | Color | HexColor) =>
       set(s => ({ ...s, color: color as HexColor })),
     setCanvasRef: (index: number, ref: string) =>
       set(s => ({
@@ -66,7 +69,13 @@ export let sceneStore = create<Scene>()(
           index != s.refs.length - 1 ?
             [...s.refs.slice(0, index + 1), ref, ...s.refs.slice(index + 1)] :
             [...s.refs, ref]
-      }))
+      })),
+    setDimensions: (demX: number, demY: number) =>
+      set(s => ({ ...s, dimensions: [demX, demY] })),
+    setUnit: (unit: number) =>
+      set(s => ({ ...s, unit })),
+    setZoom: (zoom: number) =>
+      set(s => ({ ...s, zoom }))
   }),
     {
       name: "drawbit-data-11",

@@ -1,18 +1,19 @@
 import { useRef, useState, useEffect, MouseEventHandler } from "react"
 import { FrameData, HexColor } from "../state/types"
 import { sceneStore as scene } from "../state/scene"
+import useScene from "./scene";
 
 
 function getFrameCanvasId() {
   return Math.floor(Math.random() * Date.now()).toString(16);
 }
 
-const useFrameDraw = (index: number, demX: number, demY: number, unit: number, frame: FrameData) => {
+const useFrameDraw = (index: number, frame: FrameData) => {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [frameId, setFrameId] = useState<string>("");
   const [isStroke, setIsStroke] = useState<boolean>(false);
-  const { updateFrame, initFrame, setCanvasRef, color } = scene(s => ({ updateFrame: s.updateFrame, initFrame: s.initFrame, setCanvasRef: s.setCanvasRef, color: s.color }));
+  const { setFrame, initFrame, setCanvasRef, color, setUnit, demX, demY, unit, zoom } = useScene();
 
   // set a frame id for export purposes
   useEffect(() => {
@@ -29,6 +30,10 @@ const useFrameDraw = (index: number, demX: number, demY: number, unit: number, f
       initFrame(index, demX, demY)
   }, [canvasRef.current]);
 
+  useEffect(() => {
+    setUnit(Math.round(unit * (zoom > 0 ? zoom / 100 : (unit * (1 - Math.abs(zoom - 100 / unit) / 100)))))
+  }, [zoom])
+
 
   // start a stroke and paint the currently hovered square
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -44,7 +49,7 @@ const useFrameDraw = (index: number, demX: number, demY: number, unit: number, f
     canvasContext.fillRect(x, y, unit, unit)
 
     let [xInd, yInd] = [Math.ceil(x / unit), Math.ceil(y / unit)];
-    updateFrame(index, [xInd, yInd])
+    setFrame(index, [xInd, yInd])
   }
 
   // end a stroke
@@ -64,7 +69,7 @@ const useFrameDraw = (index: number, demX: number, demY: number, unit: number, f
       canvasContext.fillRect(x, y, unit, unit)
 
       let [xInd, yInd] = [Math.ceil(x / unit), Math.ceil(y / unit)];
-      updateFrame(index, [xInd, yInd])
+      setFrame(index, [xInd, yInd])
     }
   }
 
@@ -88,6 +93,9 @@ const useFrameDraw = (index: number, demX: number, demY: number, unit: number, f
     canvasRef,
     drawFrame,
     frameId,
+    demX,
+    demY,
+    unit
   }
 }
 

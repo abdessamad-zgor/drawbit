@@ -1,4 +1,3 @@
-import { MouseEventHandler } from 'react'
 import Logo from './Logo'
 import ExportIcon from '../assets/export.svg'
 import DownloadIcon from '../assets/download.svg'
@@ -7,13 +6,13 @@ import useScene from '../hooks/scene'
 import useExport from '../hooks/exports'
 
 function EditorBar() {
-  const { name, updateNameListener } = useScene()
+  const { name, updateName } = useScene()
   const { open, transparentBg, toggleExport, toggleTransparency, downloadPng } = useExport()
   return (
     <nav className='px-12 py-4 shadow z-10 bg-white flex flex-row sticky left-0 right-0 top-0 w-full'>
       <Logo />
       <div className='flex justify-end w-full gap-4'>
-        <input type="text" value={name} onChange={updateNameListener} className='p-2 border rounded w-1/12' />
+        <input type="text" value={name} onChange={updateName} className='p-2 border rounded w-1/12' />
         <div className='flex flex-row gap-4'>
           <button onClick={toggleExport} className='bg-teal-800 text-white flex justify-center relative items-center px-8 shadow gap-2 rounded-lg'>
             <img src={ExportIcon} alt="export icon" className='w-[1.5em]' />

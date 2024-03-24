@@ -21,14 +21,20 @@ export type Frame = {
 export interface Scene {
   frames: FrameData[];
   name: string;
+  zoom: number;
+  dimensions: [number, number];
+  unit: number;
   color: HexColor;
   refs: string[];
   initFrame: (index: number, demX: number, demY: number) => void;
-  updateFrame: (index: number, tileIndex: [number, number]) => void;
+  setFrame: (index: number, tileIndex: [number, number]) => void;
   addFrame: (index: number) => void;
   deleteFrame: (index: number) => void;
-  updateName: (name: string) => void;
-  updateColor: (color: string | Color | HexColor) => void;
-  setCanvasRef: (index: number, ref: string) => void
+  setName: (name: string) => void;
+  setColor: (color: string | Color | HexColor) => void;
+  setCanvasRef: (index: number, ref: string) => void;
+  setDimensions: (demX: number, demY: number) => void;
+  setUnit: (unit: number) => void;
+  setZoom: (zoom: number) => void;
 }
 

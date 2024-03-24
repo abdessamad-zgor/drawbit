@@ -1,13 +1,13 @@
 import React from 'react'
-import useZoom from '../hooks/zoom'
+import useScene from '../hooks/scene';
 
 function ZoomController() {
-  const { zoom, updateZoom } = useZoom()
+  const { zoom, updateZoom } = useScene()
   return (
-    <>
-      {zoom + "%"}
-      < input type='range' className='' step={5} value={zoom} min={25} max={400} onChange={updateZoom} />
-    </>
+    <div className='flex flex-row justify-center items-center gap-2'>
+      <p>{zoom + "%"}</p>
+      < input type='range' className='' step={5} value={Math.abs(zoom)} min={25} max={400} onChange={updateZoom} />
+    </div>
   )
 }
 
