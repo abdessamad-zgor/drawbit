@@ -9,11 +9,11 @@ function getFrameCanvasId() {
 }
 
 const useFrameDraw = (index: number, frame: FrameData) => {
-
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [frameId, setFrameId] = useState<string>("");
   const [isStroke, setIsStroke] = useState<boolean>(false);
-  const { setFrame, initFrame, setCanvasRef, color, setUnit, demX, demY, unit, zoom } = useScene();
+  const { setFrame, initFrame, setCanvasRef, color, demX, demY, unit, zoom } = useScene();
+  const [zoomedUnit, setZoomedUnit] = useState<number>(unit)
 
   // set a frame id for export purposes
   useEffect(() => {
@@ -25,14 +25,18 @@ const useFrameDraw = (index: number, frame: FrameData) => {
   // initializes a frame with null or draws it if already persisted
   useEffect(() => {
     if (frame && canvasRef.current)
-      drawFrame(frame)
+      drawFrame(frame);
     else if (!frame)
-      initFrame(index, demX, demY)
+      initFrame(index, demX, demY);
   }, [canvasRef.current]);
 
   useEffect(() => {
-    setUnit(Math.round(unit * (zoom > 0 ? zoom / 100 : (unit * (1 - Math.abs(zoom - 100 / unit) / 100)))))
+    setZoomedUnit(Math.round(unit * (zoom / 100)));
   }, [zoom])
+
+  useEffect(() => {
+    drawFrame(frame);
+  }, [zoomedUnit])
 
 
   // start a stroke and paint the currently hovered square
@@ -46,9 +50,9 @@ const useFrameDraw = (index: number, frame: FrameData) => {
     let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
 
     canvasContext.fillStyle = color
-    canvasContext.fillRect(x, y, unit, unit)
+    canvasContext.fillRect(x, y, zoomedUnit, zoomedUnit)
 
-    let [xInd, yInd] = [Math.ceil(x / unit), Math.ceil(y / unit)];
+    let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
     setFrame(index, [xInd, yInd])
   }
 
@@ -66,21 +70,21 @@ const useFrameDraw = (index: number, frame: FrameData) => {
       let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
 
       canvasContext.fillStyle = color
-      canvasContext.fillRect(x, y, unit, unit)
+      canvasContext.fillRect(x, y, zoomedUnit, zoomedUnit)
 
-      let [xInd, yInd] = [Math.ceil(x / unit), Math.ceil(y / unit)];
+      let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
       setFrame(index, [xInd, yInd])
     }
   }
 
   const drawFrame = (data: FrameData) => {
     let context = canvasRef.current.getContext("2d");
-    context.clearRect(0, 0, demX * unit, demY * unit)
+    context.clearRect(0, 0, demX * zoomedUnit, demY * zoomedUnit)
     for (let i = 0; i < data.length; i++) {
       for (let j = 0; j < data[i].length; j++) {
         if (data[i][j]) {
           context.fillStyle = data[i][j];
-          context.fillRect(j * unit, i * unit, unit, unit);
+          context.fillRect(j * zoomedUnit, i * zoomedUnit, zoomedUnit, zoomedUnit);
         }
       }
     }
@@ -95,7 +99,7 @@ const useFrameDraw = (index: number, frame: FrameData) => {
     frameId,
     demX,
     demY,
-    unit
+    unit: zoomedUnit
   }
 }
 

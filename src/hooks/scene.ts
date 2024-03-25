@@ -21,7 +21,7 @@ const useScene = () => {
 
   // negative value indicate the direction of change
   const updateZoom: ChangeEventHandler<HTMLInputElement> = (e) => {
-    s.setZoom(parseInt(e.target.value) < Math.abs(s.zoom) ? -parseInt(e.target.value) : parseInt(e.target.value))
+    s.setZoom(parseInt(e.target.value))
   }
 
   return {
