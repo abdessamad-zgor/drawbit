@@ -12,7 +12,7 @@ function ColorChooser() {
       {
 
         togglePicker ?
-          <SketchPicker className="absolute bottom-[110%] " color={color} onChangeComplete={handlePickerChange} /> : <></>
+          <SketchPicker className="absolute bottom-[110%]" color={color} onChangeComplete={handlePickerChange} /> : <></>
       }
       <div
         className='w-[2em] h-[2em] rounded border-black ring-2 ring-sky-400 shadow-lg shadow-sky-300'

@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect, MouseEventHandler } from "react"
-import { FrameData, HexColor } from "../state/types"
-import { sceneStore as scene } from "../state/scene"
+import { FrameData } from "../state/types"
 import useScene from "./scene";
 
 
@@ -35,7 +34,8 @@ const useFrameDraw = (index: number, frame: FrameData) => {
   }, [zoom])
 
   useEffect(() => {
-    drawFrame(frame);
+    if (frame)
+      drawFrame(frame);
   }, [zoomedUnit])
 
 
