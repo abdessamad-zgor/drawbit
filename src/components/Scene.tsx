@@ -12,7 +12,7 @@ function Scene() {
       {
         frames.map(
           (f, i) =>
-            <div className='flex flex-col'>
+            <div className='flex flex-col' key={i}>
               <div className='flex flex-col m-4'>
                 <Frame frame={f[0].length == 0 ? undefined : f} index={i} />
                 {/* FrameActions Component */}

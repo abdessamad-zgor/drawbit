@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, MouseEventHandler } from "react"
+import { useRef, useState, useEffect, MouseEventHandler, useCallback } from "react"
 import { FrameData } from "../state/types"
 import useScene from "./scene";
 
@@ -40,12 +40,12 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
 
   // start a stroke and paint the currently hovered square
-  const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
+  const onMouseDown: MouseEventHandler<HTMLDivElement> = useCallback((e) => {
     setIsStroke(true)
     let canvasContext = canvasRef.current.getContext("2d");
     // get element position within canvas
     let canvasRect = canvasRef.current.getBoundingClientRect();
-    let targetRect = e.currentTarget.getBoundingClientRect();
+    let targetRect = (e.target as HTMLDivElement).getBoundingClientRect();
 
     let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
 
@@ -54,13 +54,13 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
     let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
     setFrame(index, [xInd, yInd])
-  }
+  }, [setIsStroke, setFrame, index, zoomedUnit])
 
   // end a stroke
   const onMouseUp: MouseEventHandler<HTMLDivElement> = (e) => setIsStroke(false)
 
   // this needs to be faster
-  const onMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
+  const onMouseMove: MouseEventHandler<HTMLDivElement> = useCallback((e) => {
     if (isStroke) {
       let canvasContext = canvasRef.current.getContext("2d");
       // get element position within canvas
@@ -75,9 +75,9 @@ const useFrameDraw = (index: number, frame: FrameData) => {
       let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
       setFrame(index, [xInd, yInd])
     }
-  }
+  }, [isStroke, setFrame, index, zoomedUnit])
 
-  const drawFrame = (data: FrameData) => {
+  const drawFrame = useCallback((data: FrameData) => {
     let context = canvasRef.current.getContext("2d");
     context.clearRect(0, 0, demX * zoomedUnit, demY * zoomedUnit)
     for (let i = 0; i < data.length; i++) {
@@ -88,7 +88,7 @@ const useFrameDraw = (index: number, frame: FrameData) => {
         }
       }
     }
-  }
+  }, [demX, demY, zoomedUnit])
 
   return {
     startStroke: onMouseDown,

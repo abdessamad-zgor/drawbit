@@ -12,8 +12,9 @@ const useScene = () => {
   }, [])
 
   useEffect(() => {
-    console.log("unit :", s.unit)
-  }, [s.unit])
+    console.log("frames :", s.frames)
+    console.log("refs :", s.refs)
+  }, [s.frames, s.refs])
 
   const updateName: ChangeEventHandler<HTMLInputElement> = (e) => {
     s.setName(e.target.value)

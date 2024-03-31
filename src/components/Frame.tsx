@@ -28,18 +28,19 @@ const Frame: React.FC<FrameProptypes> = ({ index, frame }) => {
     >
       <div className='absolute flex flex-row w-full inset-0 z-10'
         onMouseMove={drawStroke}
+        onMouseDown={startStroke}
       >
         {
           Array(demX).fill(0).map(
-            _ =>
-              <div className='flex flex-col' style={{ width: `${unit}px` }}>
+            (_, i) =>
+              <div key={i} className='flex flex-col' style={{ width: `${unit}px` }}>
                 {
                   Array(demY).fill(0).map(
-                    _ =>
+                    (_, j) =>
                       <div
+                        key={j}
                         style={{ height: `${unit}px`, width: `${unit}px` }}
                         className='border-b border-r border-stone-200'
-                        onMouseDown={startStroke}
                       >
                       </div>
                   )

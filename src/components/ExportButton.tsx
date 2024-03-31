@@ -14,11 +14,11 @@ function ExportButton() {
       {
         open ?
           <div className='rounded shadow-lg absolute top-[140%] bg-white border right-0 py-4 px-2 w-[250%]' onClick={(e) => e.stopPropagation()}>
-            <select className='p-2 border rounded w-full'>
-              <option><input type='checkbox' checked={selectOpts == true} onChange={selectAll} /> {" "} All</option>
+            <select onChange={selectFrames} className='p-2 border text-slate-800 rounded w-full'>
+              <option value="all"> <div> <input type='checkbox' checked={selectOpts == true} /> {" "} All </div></option>
               {
                 frames.map((_, i) =>
-                  <option><input type='checkbox' checked={(selectOpts as number[]).includes(i) || false} onChange={selectFrames(i)} /> {" "} Frame {i} </option>
+                  <option value={i}><input type='checkbox' checked={(selectOpts as number[]).length ? (selectOpts as number[]).includes(i) : false} /> {" "} Frame {i + 1} </option>
                 )
               }
             </select>
