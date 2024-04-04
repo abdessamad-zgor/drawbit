@@ -1,8 +1,38 @@
-import { MutableRefObject } from "react"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
-import { Scene, FrameData, HexColor } from "./types"
+import { immer } from "zustand/middleware/immer"
+import { FrameData, HexColor } from "./types"
 import { Color } from "react-color"
+
+export type Frame = {
+  demX: number;
+  demY: number;
+  unit: number;
+  frame?: FrameData;
+}
+
+export interface Scene {
+  frames: FrameData[];
+  name: string;
+  zoom: number;
+  dimensions: [number, number];
+  unit: number;
+  color: HexColor;
+  refs: string[];
+}
+
+export interface SceneActions {
+  setCanvasRef: (index: number, ref: string) => void;
+  setDimensions: (demX: number, demY: number) => void;
+  setUnit: (unit: number) => void;
+  setName: (name: string) => void;
+  initFrame: (index: number, demX: number, demY: number) => void;
+  setFrame: (index: number, tileIndex: [number, number]) => void;
+  addFrame: (index: number) => void;
+  deleteFrame: (index: number) => void;
+  setColor: (color: string | Color | HexColor) => void;
+  setZoom: (zoom: number) => void;
+}
 
 function initFrame(demX: number, demY: number) {
   let arr = []
@@ -15,70 +45,67 @@ function initFrame(demX: number, demY: number) {
   return arr
 }
 
-
-export let sceneStore = create<Scene>()(
-  persist((set) => ({
-    frames: [[[]]],
-    refs: [],
-    color: "#000",
-    zoom: 100,
-    dimensions: [100, 50],
-    unit: 5,
-    name: "Untitled",
-    setFrame: (index: number, tileIndex: [number, number]) => {
-      set(s => {
-        let newFrames = [...s.frames]
-        newFrames[index][tileIndex[1]][tileIndex[0]] = s.color
-        return {
-          ...s,
-          frames: newFrames
-        }
-      })
-    },
-    initFrame: (index: number, demX: number, demY: number) => {
-      set(s => ({
-        ...s,
-        frames: s.frames.map((f, i) => index == i ? initFrame(demX, demY) : f),
-        refs: [null]
-      }))
-    },
-    addFrame: (index?: number) => {
-      set(s => ({
-        ...s,
-        frames: index && index != s.frames.length - 1 ?
-          [...s.frames.slice(0, index + 1), [[]], ...s.frames.slice(index + 1)] :
-          [...s.frames, [[]]],
-      }))
-    },
-    deleteFrame: (index: number) => {
-      set(s => ({
-        ...s,
-        frames: [...s.frames].filter((_, i) => i != index),
-        refs: [...s.refs].filter((_, i) => i != index)
-      }))
-    },
-    setName: (name: string) =>
-      set(s => ({ ...s, name })),
-    setColor: (color: string | Color | HexColor) =>
-      set(s => ({ ...s, color: color as HexColor })),
-    setCanvasRef: (index: number, ref: string) =>
-      set(s => ({
-        ...s,
-        refs: s.refs.length == s.frames.length ?
-          s.refs.map((r, i) => i == index ? ref : r) :
-          index != s.refs.length - 1 ?
-            [...s.refs.slice(0, index + 1), ref, ...s.refs.slice(index + 1)] :
-            [...s.refs, ref]
-      })),
-    setDimensions: (demX: number, demY: number) =>
-      set(s => ({ ...s, dimensions: [demX, demY] })),
-    setUnit: (unit: number) =>
-      set(s => ({ ...s, unit })),
-    setZoom: (zoom: number) =>
-      set(s => ({ ...s, zoom }))
-  }),
+export let sceneStore = create<Scene & SceneActions>()(
+  persist(
+    immer((set) => ({
+      frames: [[[]]],
+      refs: [],
+      color: "#000",
+      zoom: 100,
+      dimensions: [40, 25] as [number, number],
+      unit: 20,
+      name: "Untitled",
+      setFrame: (index: number, tileIndex: [number, number]) => {
+        set(s => {
+          s.frames[index][tileIndex[1]][tileIndex[0]] = s.color
+        })
+      },
+      initFrame: (index: number, demX: number, demY: number) => {
+        set(s => {
+          s.frames[index] = initFrame(demX, demY)
+        })
+      },
+      addFrame: (index?: number) => {
+        set(s => {
+          s.frames = [...s.frames.slice(0, index + 1), [[]], ...s.frames.slice(index + 1)]
+        })
+      },
+      deleteFrame: (index: number) => {
+        set(s => {
+          s.frames = [...s.frames].filter((_, i) => i != index)
+          s.refs = [...s.refs].filter((_, i) => i != index)
+        })
+      },
+      setName: (name: string) =>
+        set(s => {
+          s.name = name;
+        }),
+      setColor: (color: string | Color | HexColor) =>
+        set(s => {
+          s.color = color as HexColor;
+        }),
+      setCanvasRef: (index: number, ref: string) =>
+        set(s => {
+          if (s.refs.length == s.frames.length)
+            s.refs[index] = ref;
+          else
+            s.refs = [...s.refs.slice(0, index), ref, ...s.refs.slice(index)]
+        }),
+      setDimensions: (demX: number, demY: number) =>
+        set(s => {
+          s.dimensions = [demX, demY]
+        }),
+      setUnit: (unit: number) =>
+        set(s => {
+          s.unit = unit
+        }),
+      setZoom: (zoom: number) =>
+        set(s => {
+          s.zoom = zoom
+        })
+    })),
     {
-      name: "drawbit-data-11",
+      name: "drawbit-data",
     }
   )
 )

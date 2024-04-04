@@ -7,7 +7,9 @@ const useScene = () => {
   useEffect(() => {
     if (document) {
       let sceneElement = document.getElementById('scene');
-      sceneElement.style.paddingBlock = `${s.dimensions[1] * s.unit / 3}px`
+      if (sceneElement) {
+        sceneElement.style.paddingBlock = `${s.dimensions[1] * s.unit / 3}px`
+      }
     }
   }, [])
 

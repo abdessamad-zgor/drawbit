@@ -1,7 +1,6 @@
 import { useState, useEffect, MouseEventHandler } from "react";
 import { sceneStore as scene } from "../state/scene";
 import { HexColor } from "../state/types";
-import { ColorChangeHandler } from "react-color";
 
 const useColor = () => {
   const { color, setColor } = scene()
@@ -16,9 +15,9 @@ const useColor = () => {
     '#4B0082'
   ])
 
-  const handlePickerChange: ColorChangeHandler = (color, _) => {
-    setSuggestedColors([color.hex as HexColor, ...suggestedColors.slice(0, suggestedColors.length - 1)])
-    setColor(color.hex)
+  const handlePickerChange = (color) => {
+    setSuggestedColors([color as HexColor, ...suggestedColors.slice(0, suggestedColors.length - 1)])
+    setColor(color)
   }
 
   const togglePickerHandler = () => {

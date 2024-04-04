@@ -5,7 +5,13 @@ export default {
     "./src/**/*.{html,ts,js,tsx,jsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'magneta': '#A343BA',
+        'darkblue': '#162E5A',
+        'skin': '##DAB4B6'
+      }
+    },
   },
   plugins: [],
 }
