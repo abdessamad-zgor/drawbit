@@ -4,9 +4,10 @@ import useScene from '../hooks/scene';
 function ZoomController() {
   const { zoom, updateZoom } = useScene()
   return (
-    <div className='flex flex-row justify-center items-center gap-2'>
-      <p>{zoom + "%"}</p>
-      < input type='range' className='' step={5} value={Math.abs(zoom)} min={25} max={400} onChange={updateZoom} />
+    <div className='flex flex-row justify-center text-xl items-center'>
+      <button className='border rounded-l bg-stone-300 p-2' onClick={updateZoom(1)}>+</button>
+      <p className='text-center font-light border-t border-b p-2'>{zoom + "%"}</p>
+      <button className='border rounded-r  bg-stone-300 p-2' onClick={updateZoom(-1)}>-</button>
     </div>
   )
 }

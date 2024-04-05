@@ -1,8 +1,8 @@
-import { ChangeEventHandler, useEffect } from "react";
+import { MouseEventHandler, ChangeEventHandler, useEffect } from "react";
 import { sceneStore as scene } from "../state/scene";
 
 const useScene = () => {
-  const { demX, demY, ...s } = scene(s => ({ demX: s.dimensions[0], demY: s.dimensions[1], ...s }))
+  const { demX, demY, zoom, ...s } = scene(s => ({ demX: s.dimensions[0], demY: s.dimensions[1], ...s }))
 
   useEffect(() => {
     if (document) {
@@ -23,16 +23,18 @@ const useScene = () => {
   }
 
   // negative value indicate the direction of change
-  const updateZoom: ChangeEventHandler<HTMLInputElement> = (e) => {
-    s.setZoom(parseInt(e.target.value))
+  const updateZoom: (i: number) => MouseEventHandler<HTMLButtonElement> = (i: number) => {
+    return (e) =>
+      s.setZoom(zoom + (i > 0 ? 5 : -5))
   }
 
   return {
     ...s,
     demX,
     demY,
+    zoom,
     updateName,
-    updateZoom
+    updateZoom,
   }
 }
 

@@ -49,7 +49,7 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
     let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
 
-    canvasContext.fillStyle = color
+    canvasContext.fillStyle = color ?? "#fff"
     canvasContext.fillRect(x, y, zoomedUnit, zoomedUnit)
 
     let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
@@ -69,7 +69,8 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
       let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
 
-      canvasContext.fillStyle = color
+      canvasContext.fillStyle = color ?? "#fff"
+
       canvasContext.fillRect(x, y, zoomedUnit, zoomedUnit)
 
       let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];

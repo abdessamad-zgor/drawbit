@@ -1,24 +1,32 @@
-import { useState, useEffect, MouseEventHandler } from "react";
+import { useState, useEffect, MouseEventHandler, useMemo } from "react";
 import { sceneStore as scene } from "../state/scene";
 import { HexColor } from "../state/types";
 
 const useColor = () => {
-  const { color, setColor } = scene()
+  const { color, setColor, dimensions, frames } = scene()
+  const documentColors = useMemo(() => {
+    let colors: string[] = [];
+    for (let f = 0; f < frames.length; f++) {
+      if (frames[f].length == dimensions[1] && frames[f][0].length == dimensions[0]) {
+        for (let i = 0; i < dimensions[1]; i++) {
+          for (let j = 0; j < dimensions[0]; j++) {
+            //@ts-ignore
+            if (frames[f][i][j] && !colors.includes(frames[f][i][j] as string))
+              //@ts-ignore
+              colors.push(frames[f][i][j] as string)
+          }
+        }
+      }
+    }
+    return colors
+  }, [frames, color])
   const [togglePicker, setTogglePicker] = useState<boolean>(false)
-  const [suggestedColors, setSuggestedColors] = useState<HexColor[]>([
-    '#008080',
-    '#800080',
-    '#FFA500',
-    '#FFC0CB',
-    '#40E0D0',
-    '#00FF00',
-    '#4B0082'
-  ])
 
-  const handlePickerChange = (color) => {
-    setSuggestedColors([color as HexColor, ...suggestedColors.slice(0, suggestedColors.length - 1)])
+  const handlePickerChange = (color) =>
     setColor(color)
-  }
+
+  const setEraser = () =>
+    setColor(null)
 
   const togglePickerHandler = () => {
     setTogglePicker(!togglePicker)
@@ -26,17 +34,17 @@ const useColor = () => {
 
   const pickColor: MouseEventHandler<HTMLDivElement> = (e) => {
     let colorCode = e.currentTarget?.getAttribute("hex-code") as HexColor;
-    setSuggestedColors([color, ...suggestedColors.filter(c => c != colorCode)])
     setColor(colorCode)
   }
 
   return {
     color,
-    suggestedColors,
+    documentColors,
     handlePickerChange,
     pickColor,
     togglePickerHandler,
-    togglePicker
+    togglePicker,
+    setEraser
   }
 }
 
