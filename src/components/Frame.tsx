@@ -4,21 +4,20 @@ import useFrameDraw from '../hooks/frame'
 
 type FrameProptypes = {
   index: number;
-  frame?: FrameData;
+  frame: FrameData;
+  id: string
 }
 
-const Frame: React.FC<FrameProptypes> = ({ index, frame }) => {
+const Frame: React.FC<FrameProptypes> = ({ index, frame, id }) => {
   const {
     startStroke,
     drawStroke,
     endStroke,
     canvasRef,
-    frameId,
     unit,
     demX,
     demY
   } = useFrameDraw(index, frame ?? null)
-
 
   const [canvasWidth, canvasHeight] = [demX * unit, demY * unit]
 
@@ -49,7 +48,7 @@ const Frame: React.FC<FrameProptypes> = ({ index, frame }) => {
           )
         }
       </div>
-      <canvas ref={canvasRef} id={frameId} className='relative z-0' width={canvasWidth} height={canvasHeight}></canvas>
+      <canvas ref={canvasRef} id={id} className='relative z-0' width={canvasWidth} height={canvasHeight}></canvas>
     </div>
   )
 }

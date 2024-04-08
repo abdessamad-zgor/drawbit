@@ -1,6 +1,7 @@
 import React from 'react'
 import ExportIcon from "../assets/export.svg"
 import DownloadIcon from "../assets/download.svg"
+import { Select, SelectTrigger, SelectContent, SelectValue } from '@/components/ui/select';
 import useExport from '../hooks/exports'
 import useScene from '../hooks/scene'
 

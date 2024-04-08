@@ -3,6 +3,7 @@ import { combine, persist } from "zustand/middleware"
 import { immer } from "zustand/middleware/immer"
 import { FrameData, HexColor } from "./types"
 import { Color } from "react-color"
+import { getId } from "@/lib/utils"
 
 export type Frame = {
   demX: number;
@@ -49,40 +50,36 @@ export let sceneStore = create(
   persist(
     immer(
       combine({
-        frames: [[[]]],
+        frames: [{ id: getId(), data: [[]] }],
         refs: [],
         color: "#000",
         zoom: 100,
         dimensions: [40, 25] as [number, number],
         unit: 20,
         name: "Untitled",
+        strokeSize: 1
       },
         (set) => ({
           setFrame: (index: number, tileIndex: [number, number]) => {
             set(s => {
-              s.frames[index][tileIndex[1]][tileIndex[0]] = s.color
-            })
-          },
-          initFrame: (index: number, demX: number, demY: number) => {
-            set(s => {
-              s.frames[index] = initFrame(demX, demY)
+              s.frames[index].data[tileIndex[1]][tileIndex[0]] = s.color
             })
           },
           addFrame: (index?: number) => {
             set(s => {
-              s.frames = [...s.frames.slice(0, index + 1), [[]], ...s.frames.slice(index + 1)]
+              s.frames = [...s.frames.slice(0, index + 1), { id: getId(), data: initFrame(s.dimensions[0], s.dimensions[1]) }, ...s.frames.slice(index + 1)]
             })
           },
           duplicateFrame: (index: number) => {
             set(s => {
-              s.frames = [...s.frames.slice(0, index + 1), s.frames[index], ...s.frames.slice(index + 1)]
+              s.frames = [...s.frames.slice(0, index + 1), { id: getId(), data: s.frames[index].data }, ...s.frames.slice(index + 1)]
             })
           }
           ,
           deleteFrame: (index: number) => {
             set(s => {
-              s.frames = [...s.frames].filter((_, i) => i != index)
-              s.refs = [...s.refs].filter((_, i) => i != index)
+              s.frames = [...s.frames.filter((_, i) => i != index)]
+              s.refs = [...s.refs.filter((_, i) => i != index)]
             })
           },
           setName: (name: string | null) =>
@@ -111,6 +108,10 @@ export let sceneStore = create(
           setZoom: (zoom: number) =>
             set(s => {
               s.zoom = zoom
+            }),
+          setStrokeSize: (size: number) =>
+            set(s => {
+              s.strokeSize = size
             })
         }))),
     {

@@ -14,7 +14,6 @@ const useScene = () => {
   }, [])
 
   useEffect(() => {
-    console.log("frames :", s.frames)
     console.log("refs :", s.refs)
   }, [s.frames, s.refs])
 

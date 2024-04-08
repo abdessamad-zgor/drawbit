@@ -1,32 +1,19 @@
 import { useRef, useState, useEffect, MouseEventHandler, useCallback } from "react"
 import { FrameData } from "../state/types"
+import { getId } from "@/lib/utils";
 import useScene from "./scene";
 
 
-function getFrameCanvasId() {
-  return Math.floor(Math.random() * Date.now()).toString(16);
-}
-
 const useFrameDraw = (index: number, frame: FrameData) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [frameId, setFrameId] = useState<string>("");
   const [isStroke, setIsStroke] = useState<boolean>(false);
-  const { setFrame, initFrame, setCanvasRef, color, demX, demY, unit, zoom } = useScene();
+  const { setFrame, color, demX, demY, unit, zoom } = useScene();
   const [zoomedUnit, setZoomedUnit] = useState<number>(unit)
-
-  // set a frame id for export purposes
-  useEffect(() => {
-    const id = getFrameCanvasId()
-    setFrameId(id)
-    setCanvasRef(index, id);
-  }, [])
 
   // initializes a frame with null or draws it if already persisted
   useEffect(() => {
     if (frame && canvasRef.current)
       drawFrame(frame);
-    else if (!frame)
-      initFrame(index, demX, demY);
   }, [canvasRef.current]);
 
   useEffect(() => {
@@ -49,7 +36,7 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
     let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
 
-    canvasContext.fillStyle = color ?? "#fff"
+    canvasContext.fillStyle = color ?? "#ffffffff"
     canvasContext.fillRect(x, y, zoomedUnit, zoomedUnit)
 
     let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
@@ -69,7 +56,7 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
       let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
 
-      canvasContext.fillStyle = color ?? "#fff"
+      canvasContext.fillStyle = color ?? "#ffffffff"
 
       canvasContext.fillRect(x, y, zoomedUnit, zoomedUnit)
 
@@ -97,7 +84,6 @@ const useFrameDraw = (index: number, frame: FrameData) => {
     endStroke: onMouseUp,
     canvasRef,
     drawFrame,
-    frameId,
     demX,
     demY,
     unit: zoomedUnit

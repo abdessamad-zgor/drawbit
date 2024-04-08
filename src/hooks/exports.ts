@@ -17,15 +17,6 @@ const useExport = () => {
       setSelectOpts(!selectOpts);
   }
 
-  //const selectFrames = (i: number) => {
-  //  return (((e) => {
-  //    if (typeof selectOpts == "boolean")
-  //      setSelectOpts([i]);
-  //    else
-  //      setSelectOpts([...selectOpts, i])
-  //  }) as ChangeEventHandler);
-  //}
-
   const selectFrames: ChangeEventHandler = (e) => {
     let value = (e.target as HTMLOptionElement).value
     if (value == "all") {
