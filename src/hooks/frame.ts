@@ -7,7 +7,7 @@ import useScene from "./scene";
 const useFrameDraw = (index: number, frame: FrameData) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isStroke, setIsStroke] = useState<boolean>(false);
-  const { setFrame, color, demX, demY, unit, zoom } = useScene();
+  const { setFrame, color, demX, demY, unit, zoom, strokeSize } = useScene();
   const [zoomedUnit, setZoomedUnit] = useState<number>(unit)
 
   // initializes a frame with null or draws it if already persisted
@@ -37,11 +37,11 @@ const useFrameDraw = (index: number, frame: FrameData) => {
     let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
 
     canvasContext.fillStyle = color ?? "#ffffffff"
-    canvasContext.fillRect(x, y, zoomedUnit, zoomedUnit)
+    canvasContext.fillRect(x, y, zoomedUnit * strokeSize, zoomedUnit * (strokeSize))
 
     let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
     setFrame(index, [xInd, yInd])
-  }, [setIsStroke, setFrame, index, zoomedUnit])
+  }, [setIsStroke, setFrame, index, zoomedUnit, color])
 
   // end a stroke
   const onMouseUp: MouseEventHandler<HTMLDivElement> = (e) => setIsStroke(false)
@@ -58,12 +58,12 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
       canvasContext.fillStyle = color ?? "#ffffffff"
 
-      canvasContext.fillRect(x, y, zoomedUnit, zoomedUnit)
+      canvasContext.fillRect(x, y, zoomedUnit * (strokeSize), zoomedUnit * (strokeSize))
 
       let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
       setFrame(index, [xInd, yInd])
     }
-  }, [isStroke, setFrame, index, zoomedUnit])
+  }, [isStroke, setFrame, index, zoomedUnit, color])
 
   const drawFrame = useCallback((data: FrameData) => {
     let context = canvasRef.current.getContext("2d");

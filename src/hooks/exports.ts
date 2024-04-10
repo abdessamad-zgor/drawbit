@@ -6,7 +6,8 @@ import { saveAs } from "file-saver"
 const useExport = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [selectOpts, setSelectOpts] = useState<number[] | boolean>(true)
-  const { name, refs, frames } = useScene()
+  const { name, frames } = useScene()
+  const refs = frames.map(f => f.id)
 
   const toggleExport: MouseEventHandler<HTMLButtonElement> = () => {
     setOpen(!open)

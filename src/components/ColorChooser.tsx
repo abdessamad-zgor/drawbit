@@ -36,7 +36,7 @@ function ColorChooser() {
       {
         togglePicker ?
           <HexColorPicker
-            color={color}
+            color={color ?? "#fff"}
             onChange={handlePickerChange} />
           : <></>
       }

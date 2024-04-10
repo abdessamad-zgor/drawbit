@@ -17,7 +17,7 @@ const Frame: React.FC<FrameProptypes> = ({ index, frame, id }) => {
     unit,
     demX,
     demY
-  } = useFrameDraw(index, frame ?? null)
+  } = useFrameDraw(index, frame)
 
   const [canvasWidth, canvasHeight] = [demX * unit, demY * unit]
 
@@ -32,7 +32,8 @@ const Frame: React.FC<FrameProptypes> = ({ index, frame, id }) => {
         {
           Array(demX).fill(0).map(
             (_, i) =>
-              <div key={i} className='flex flex-col' style={{ width: `${unit}px` }}>
+              <div key={i} className='flex flex-col' style={{ width: `${unit}px` }} onDrag={(e) => e.preventDefault()}
+              >
                 {
                   Array(demY).fill(0).map(
                     (_, j) =>
@@ -40,6 +41,7 @@ const Frame: React.FC<FrameProptypes> = ({ index, frame, id }) => {
                         key={j}
                         style={{ height: `${unit}px`, width: `${unit}px` }}
                         className='border-b border-r border-stone-200'
+                        onDrag={(e) => e.preventDefault()}
                       >
                       </div>
                   )

@@ -7,13 +7,14 @@ const useColor = () => {
   const documentColors = useMemo(() => {
     let colors: string[] = [];
     for (let f = 0; f < frames.length; f++) {
-      if (frames[f].length == dimensions[1] && frames[f][0].length == dimensions[0]) {
+      let frameData = frames[f].data
+      if (frameData.length == dimensions[1] && frameData[0].length == dimensions[0]) {
         for (let i = 0; i < dimensions[1]; i++) {
           for (let j = 0; j < dimensions[0]; j++) {
             //@ts-ignore
-            if (frames[f][i][j] && !colors.includes(frames[f][i][j] as string))
+            if (frameData[i][j] && !colors.includes(frameData[i][j] as string))
               //@ts-ignore
-              colors.push(frames[f][i][j] as string)
+              colors.push(frameData[i][j] as string)
           }
         }
       }
