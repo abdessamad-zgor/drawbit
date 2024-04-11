@@ -1,4 +1,4 @@
-import { ChangeEventHandler, MouseEventHandler, useState } from "react";
+import { ChangeEventHandler, MouseEventHandler, useEffect, useState } from "react";
 import useScene from "./scene";
 import { BlobReader, BlobWriter, ZipWriter } from "@zip.js/zip.js";
 import { saveAs } from "file-saver"
@@ -8,6 +8,10 @@ const useExport = () => {
   const [selectOpts, setSelectOpts] = useState<number[] | boolean>(true)
   const { name, frames } = useScene()
   const refs = frames.map(f => f.id)
+
+  useEffect(() => {
+    console.log(selectOpts)
+  }, [selectOpts])
 
   const toggleExport: MouseEventHandler<HTMLButtonElement> = () => {
     setOpen(!open)

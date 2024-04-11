@@ -1,7 +1,5 @@
-import React from 'react'
 import useScene from '../hooks/scene'
 import Frame from './Frame'
-import { getId } from '@/lib/utils'
 import PlusIcon from "../assets/plus-square.svg"
 import TrashIcon from "../assets/trash.svg"
 import DuplicateIcon from "../assets/duplicate.svg"
@@ -39,7 +37,6 @@ function Scene() {
               </div>
           )
       }
-
     </div>
   )
 }

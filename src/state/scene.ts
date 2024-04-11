@@ -46,14 +46,16 @@ function initFrame(demX: number, demY: number) {
   return arr
 }
 
+const defaultDimensions = [100, 40]
+
 export let sceneStore = create(
 
   immer(
     combine({
-      frames: [],
+      frames: [{ id: getId(), data: initFrame(defaultDimensions[0], defaultDimensions[1]) }],
       color: "#000",
       zoom: 100,
-      dimensions: [100, 40] as [number, number],
+      dimensions: defaultDimensions,
       unit: 10,
       name: "Untitled",
       strokeSize: 1

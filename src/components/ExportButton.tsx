@@ -9,7 +9,7 @@ function ExportButton() {
   const { open, toggleExport, downloadPng, selectAll, selectOpts, selectFrames } = useExport()
   const { frames } = useScene()
   return (
-    <button onClick={toggleExport} className='bg-teal-800 text-white flex justify-center relative items-center px-8 shadow gap-2 rounded-lg'>
+    <button onClick={toggleExport} className='bg-teal-800 py-2 text-white flex justify-center relative items-center px-8 shadow gap-2 rounded-lg'>
       <img src={ExportIcon} alt="export icon" className='w-[1.5em]' />
       <span>Export</span>
       {
@@ -23,9 +23,12 @@ function ExportButton() {
                 )
               }
             </select>
-            <button onClick={downloadPng} className='bg-black shadow my-2 rounded-lg py-2 border w-full flex justify-center gap-4 items-center'>
+            <button onClick={downloadPng} className='bg-purple-700 shadow my-2 rounded-lg py-2 border w-full flex justify-center gap-4 items-center'>
               <img src={DownloadIcon} alt="download icon" className='w-[1.5em]' />
               <span className='text-white'> Download </span>
+            </button>
+            <button onClick={downloadPng} className='bg-purple-200 border-2 border-purple-400 shadow my-2 rounded-lg py-2 w-full flex justify-center gap-4 items-center'>
+              <span className='text-purple-900'> Download Gif</span>
             </button>
           </div>
           :
