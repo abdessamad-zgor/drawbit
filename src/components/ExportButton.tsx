@@ -4,6 +4,7 @@ import DownloadIcon from "../assets/download.svg"
 import { Select, SelectTrigger, SelectContent, SelectValue } from '@/components/ui/select';
 import useExport from '../hooks/exports'
 import useScene from '../hooks/scene'
+import GifDialog from './GifDialog';
 
 function ExportButton() {
   const { open, toggleExport, downloadPng, selectAll, selectOpts, selectFrames } = useExport()
@@ -27,9 +28,7 @@ function ExportButton() {
               <img src={DownloadIcon} alt="download icon" className='w-[1.5em]' />
               <span className='text-white'> Download </span>
             </button>
-            <button onClick={downloadPng} className='bg-purple-200 border-2 border-purple-400 shadow my-2 rounded-lg py-2 w-full flex justify-center gap-4 items-center'>
-              <span className='text-purple-900'> Download Gif</span>
-            </button>
+            <GifDialog />
           </div>
           :
           <></>

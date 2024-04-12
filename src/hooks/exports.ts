@@ -1,13 +1,30 @@
 import { ChangeEventHandler, MouseEventHandler, useEffect, useState } from "react";
-import useScene from "./scene";
+import GIF from "gif.js"
 import { BlobReader, BlobWriter, ZipWriter } from "@zip.js/zip.js";
 import { saveAs } from "file-saver"
+import useScene from "./scene";
 
 const useExport = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [selectOpts, setSelectOpts] = useState<number[] | boolean>(true)
+  const [gifUrl, setGifUrl] = useState<string>("")
+  const [isGifOpen, setIsGifOpen] = useState<boolean>(false)
   const { name, frames } = useScene()
   const refs = frames.map(f => f.id)
+
+  useEffect(() => {
+    if (isGifOpen) {
+      let g = new GIF({
+        workers: 2,
+        quality: 10,
+      });
+      for (let ref of refs) {
+        g.addFrame(document.getElementById(ref) as HTMLCanvasElement)
+      }
+      g.on('finished', (blob) => setGifUrl(URL.createObjectURL(blob)))
+      g.render()
+    }
+  }, [isGifOpen])
 
   useEffect(() => {
     console.log(selectOpts)
@@ -16,6 +33,9 @@ const useExport = () => {
   const toggleExport: MouseEventHandler<HTMLButtonElement> = () => {
     setOpen(!open)
   }
+
+  const onModalOpen = (open) =>
+    setIsGifOpen(open)
 
   const selectAll: ChangeEventHandler = (e) => {
     if (typeof selectOpts == "boolean")
@@ -27,7 +47,7 @@ const useExport = () => {
     if (value == "all") {
       setSelectOpts(true)
     } else {
-      let options = (selectOpts as number[])
+      let options = Array.isArray(selectOpts) ? selectOpts as number[] : []
       if (options.length && options.includes(parseInt(value))) {
         setSelectOpts([...options.filter(v => v != parseInt(value))])
       } else {
@@ -74,7 +94,9 @@ const useExport = () => {
     downloadPng,
     selectOpts,
     selectAll,
-    selectFrames
+    selectFrames,
+    gifUrl,
+    onModalOpen
   }
 }
 

@@ -3,6 +3,9 @@ import { FrameData } from "../state/types"
 import { getId } from "@/lib/utils";
 import useScene from "./scene";
 
+function rmMod(x: number, mod: number) {
+  return x - x % mod
+}
 
 const useFrameDraw = (index: number, frame: FrameData) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -32,9 +35,9 @@ const useFrameDraw = (index: number, frame: FrameData) => {
     let canvasContext = canvasRef.current.getContext("2d");
     // get element position within canvas
     let canvasRect = canvasRef.current.getBoundingClientRect();
-    let targetRect = (e.target as HTMLDivElement).getBoundingClientRect();
+    let targetRect = [rmMod(e.clientX, zoomedUnit), rmMod(e.clientY, zoomedUnit)];
 
-    let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
+    let [x, y] = [targetRect[0] - canvasRect.left, targetRect[1] - canvasRect.top];
 
     canvasContext.fillStyle = color ?? "#ffffffff"
     canvasContext.fillRect(x, y, zoomedUnit * strokeSize, zoomedUnit * (strokeSize))
@@ -52,9 +55,9 @@ const useFrameDraw = (index: number, frame: FrameData) => {
       let canvasContext = canvasRef.current.getContext("2d");
       // get element position within canvas
       let canvasRect = canvasRef.current.getBoundingClientRect();
-      let targetRect = (e.target as HTMLDivElement).getBoundingClientRect();
+      let targetRect = [rmMod(e.clientX, zoomedUnit), rmMod(e.clientY, zoomedUnit)];
 
-      let [x, y] = [targetRect.left - canvasRect.left, targetRect.top - canvasRect.top];
+      let [x, y] = [targetRect[0] - canvasRect.left, targetRect[1] - canvasRect.top];
 
       canvasContext.fillStyle = color ?? "#ffffffff"
 

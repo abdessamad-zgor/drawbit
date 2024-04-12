@@ -24,32 +24,9 @@ const Frame: React.FC<FrameProptypes> = ({ index, frame, id }) => {
   return (
     <div className='relative z-0 w-fit border rounded bg-white border-stone-300 '
       onMouseUp={endStroke}
+      onMouseMove={drawStroke}
+      onMouseDown={startStroke}
     >
-      <div className='absolute flex flex-row w-full inset-0 z-10'
-        onMouseMove={drawStroke}
-        onMouseDown={startStroke}
-      >
-        {
-          Array(demX).fill(0).map(
-            (_, i) =>
-              <div key={i} className='flex flex-col' style={{ width: `${unit}px` }} onDrag={(e) => e.preventDefault()}
-              >
-                {
-                  Array(demY).fill(0).map(
-                    (_, j) =>
-                      <div
-                        key={j}
-                        style={{ height: `${unit}px`, width: `${unit}px` }}
-                        className='border-b border-r border-stone-200'
-                        onDrag={(e) => e.preventDefault()}
-                      >
-                      </div>
-                  )
-                }
-              </div>
-          )
-        }
-      </div>
       <canvas ref={canvasRef} id={id} className='relative z-0' width={canvasWidth} height={canvasHeight}></canvas>
     </div>
   )

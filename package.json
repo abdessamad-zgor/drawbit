@@ -1,5 +1,5 @@
 {
-  "name": "bit-draw",
+  "name": "drawbit",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -15,6 +15,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@react-spring/web": "^9.7.3",
+    "@types/gif.js": "^0.2.5",
     "@zip.js/zip.js": "^2.7.40",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
