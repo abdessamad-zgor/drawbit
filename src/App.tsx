@@ -2,6 +2,7 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './views/Home'
 import Editor from './views/Editor'
+import New from './views/New'
 
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
     <Router>
       <Routes>
         <Route index element={<Home />} />
-        <Route path="/editor" element={<Editor />} />
+        <Route path='/new' element={<New />} />
+        <Route path="/scene" element={<Editor />} />
       </Routes>
     </Router>
   )

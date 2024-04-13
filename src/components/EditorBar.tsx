@@ -19,11 +19,11 @@ function EditorBar() {
               <>
                 <Link
                   className='bg-purple-700 py-2 rounded-lg shadow ripple w-1/2 text-white font-bold flex items-center justify-center'
-                  to='/editor'>
+                  to='/new'>
                   Create a scene
                 </Link>
               </> :
-              location.pathname == "/editor" ?
+              location.pathname == "/scene" ?
                 <>
                   <input type="text" value={name} onChange={updateName} className='p-2 outline-none border bg-white/50 rounded w-1/2 hover:border-purple-300 focus:border-2 focus:border-purple-700' />
                   <div className='flex flex-row gap-4'>

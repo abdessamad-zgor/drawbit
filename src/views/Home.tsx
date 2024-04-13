@@ -4,7 +4,7 @@ import EditorBar from '../components/EditorBar'
 
 function Home() {
   return (
-    <div className=' w-full min-h-screen bg-'>
+    <div className='w-full min-h-screen'>
       <div className='bg-purple-50 border-b-2 border-blue-800'>
         <EditorBar />
       </div>
@@ -15,7 +15,7 @@ function Home() {
           <div className='flex justify-center items-center h-[50%]'>
             <Link
               className='bg-purple-700 py-2 rounded-lg shadow ripple w-1/5 text-white font-bold '
-              to='/editor'>
+              to='/new'>
               Create a scene
             </Link>
           </div>

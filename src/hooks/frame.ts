@@ -4,7 +4,7 @@ import { getId } from "@/lib/utils";
 import useScene from "./scene";
 
 function rmMod(x: number, mod: number) {
-  return x - x % mod
+  return Math.round(x) - Math.round(x) % mod
 }
 
 const useFrameDraw = (index: number, frame: FrameData) => {

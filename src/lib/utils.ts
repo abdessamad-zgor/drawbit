@@ -5,7 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-
 export function getId() {
   return Math.floor(Math.random() * Date.now()).toString(16);
 }

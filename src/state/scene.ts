@@ -6,14 +6,12 @@ import { Color } from "react-color"
 import { getId } from "@/lib/utils"
 
 export type Frame = {
-  demX: number;
-  demY: number;
-  unit: number;
-  frame?: FrameData;
+  id: string,
+  data: FrameData;
 }
 
 export interface Scene {
-  frames: FrameData[];
+  frames: Frame[];
   name: string;
   zoom: number;
   dimensions: [number, number];
@@ -35,24 +33,24 @@ export interface SceneActions {
   setZoom: (zoom: number) => void;
 }
 
-function initFrame(demX: number, demY: number) {
+export function initFrame(dimensions: [number, number]) {
   let arr = []
-  for (let i = 0; i < demY; i++) {
+  for (let i = 0; i < dimensions[1]; i++) {
     arr = [...arr, []]
-    for (let j = 0; j < demX; j++) {
+    for (let j = 0; j < dimensions[0]; j++) {
       arr[i] = [...arr[i], null]
     }
   }
   return arr
 }
 
-const defaultDimensions = [100, 40]
+const defaultDimensions: [number, number] = [100, 40]
 
 export let sceneStore = create(
 
   immer(
     combine({
-      frames: [{ id: getId(), data: initFrame(defaultDimensions[0], defaultDimensions[1]) }],
+      frames: [{ id: getId(), data: initFrame(defaultDimensions) }],
       color: "#000",
       zoom: 100,
       dimensions: defaultDimensions,
@@ -61,6 +59,11 @@ export let sceneStore = create(
       strokeSize: 1
     },
       (set) => ({
+        setFrames: (frames: Frame[]) => {
+          set(s => {
+            s.frames = frames
+          })
+        },
         setFrame: (index: number, tileIndex: [number, number]) => {
           set(s => {
             for (let i = 0; i < s.strokeSize; i++) {
@@ -71,7 +74,7 @@ export let sceneStore = create(
         },
         addFrame: (index?: number) => {
           set(s => {
-            s.frames = [...s.frames.slice(0, index + 1), { id: getId(), data: initFrame(s.dimensions[0], s.dimensions[1]) }, ...s.frames.slice(index + 1)]
+            s.frames = [...s.frames.slice(0, index + 1), { id: getId(), data: initFrame(s.dimensions) }, ...s.frames.slice(index + 1)]
           })
         },
         duplicateFrame: (index: number) => {
@@ -93,9 +96,9 @@ export let sceneStore = create(
           set(s => {
             s.color = color as HexColor;
           }),
-        setDimensions: (demX: number, demY: number) =>
+        setDimensions: (dimensions: [number, number]) =>
           set(s => {
-            s.dimensions = [demX, demY]
+            s.dimensions = dimensions
           }),
         setUnit: (unit: number) =>
           set(s => {
@@ -108,7 +111,7 @@ export let sceneStore = create(
         setStrokeSize: (size: number) =>
           set(s => {
             s.strokeSize = size
-          })
+          }),
       }))
   )
 )
