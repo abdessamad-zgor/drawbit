@@ -39,12 +39,12 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
     let [x, y] = [targetRect[0] - canvasRect.left, targetRect[1] - canvasRect.top];
 
-    canvasContext.fillStyle = color ?? "#ffffffff"
+    canvasContext.fillStyle = color ?? "#00000000"
     canvasContext.fillRect(x, y, zoomedUnit * strokeSize, zoomedUnit * (strokeSize))
 
     let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
     setFrame(index, [xInd, yInd])
-  }, [setIsStroke, setFrame, index, zoomedUnit, color])
+  }, [setIsStroke, setFrame, index, zoomedUnit, color, strokeSize])
 
   // end a stroke
   const onMouseUp: MouseEventHandler<HTMLDivElement> = (e) => setIsStroke(false)
@@ -59,14 +59,14 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
       let [x, y] = [targetRect[0] - canvasRect.left, targetRect[1] - canvasRect.top];
 
-      canvasContext.fillStyle = color ?? "#ffffffff"
+      canvasContext.fillStyle = color ?? "#00000000"
 
       canvasContext.fillRect(x, y, zoomedUnit * (strokeSize), zoomedUnit * (strokeSize))
 
       let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
       setFrame(index, [xInd, yInd])
     }
-  }, [isStroke, setFrame, index, zoomedUnit, color])
+  }, [isStroke, setFrame, index, zoomedUnit, color, strokeSize])
 
   const drawFrame = useCallback((data: FrameData) => {
     let context = canvasRef.current.getContext("2d");
