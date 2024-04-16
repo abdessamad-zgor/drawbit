@@ -6,9 +6,11 @@ import Toolbar from '../components/Toolbar'
 function Editor() {
 
   return (
-    <div className='relative w-full min-h-screen bg-stone-200 flex flex-col justify-between items-center'>
+    <div className='relative w-full h-[100vh] bg-stone-200 flex flex-col justify-between items-center overflow-hidden'>
       <EditorBar />
-      <Scene />
+      <div className='w-full overflow-scroll '>
+        <Scene />
+      </div>
       <Toolbar />
     </div>
   )

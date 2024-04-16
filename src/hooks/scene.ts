@@ -10,12 +10,6 @@ const useScene = () => {
   const [newUnit, setNewUnit] = useState<number>(5)
 
   useEffect(() => {
-    if (document) {
-      let sceneElement = document.getElementById('scene');
-      if (sceneElement) {
-        sceneElement.style.paddingBlock = `${s.dimensions[1] * s.unit / 3}px`
-      }
-    }
   }, [])
 
   const updateName: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -39,8 +33,9 @@ const useScene = () => {
 
   // negative value indicate the direction of change
   const updateZoom: (i: number) => MouseEventHandler<HTMLButtonElement> = (i: number) => {
-    return (e) =>
+    return (e) => {
       s.setZoom(zoom + (i > 0 ? 5 : -5))
+    }
   }
 
   return {
