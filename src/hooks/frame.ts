@@ -39,8 +39,12 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
     let [x, y] = [targetRect[0] - canvasRect.left, targetRect[1] - canvasRect.top];
 
-    canvasContext.fillStyle = color ?? "#00000000"
-    canvasContext.fillRect(x, y, zoomedUnit * strokeSize, zoomedUnit * (strokeSize))
+    if (color) {
+      canvasContext.fillStyle = color
+      canvasContext.fillRect(x, y, zoomedUnit * (strokeSize), zoomedUnit * (strokeSize))
+    } else {
+      canvasContext.clearRect(x, y, zoomedUnit * (strokeSize), zoomedUnit * (strokeSize))
+    }
 
     let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
     setFrame(index, [xInd, yInd])
@@ -59,9 +63,12 @@ const useFrameDraw = (index: number, frame: FrameData) => {
 
       let [x, y] = [targetRect[0] - canvasRect.left, targetRect[1] - canvasRect.top];
 
-      canvasContext.fillStyle = color ?? "#00000000"
-
-      canvasContext.fillRect(x, y, zoomedUnit * (strokeSize), zoomedUnit * (strokeSize))
+      if (color) {
+        canvasContext.fillStyle = color
+        canvasContext.fillRect(x, y, zoomedUnit * (strokeSize), zoomedUnit * (strokeSize))
+      } else {
+        canvasContext.clearRect(x, y, zoomedUnit * (strokeSize), zoomedUnit * (strokeSize))
+      }
 
       let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
       setFrame(index, [xInd, yInd])
