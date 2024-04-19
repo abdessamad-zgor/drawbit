@@ -1,18 +1,17 @@
-import { DialogHeader } from '@/components/ui/dialog'
 import useScene from '@/hooks/scene'
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
+import { Card, CardContent, CardHeader, CardDescription, CardTitle } from '@/components/ui/card'
 import React from 'react'
 
 function New() {
   const { createNewScene, onDimensionsChange, onUnitChange, newDimensions, newUnit } = useScene()
   return (
-    <div className='w-full min-h-screen bg-stone-700'>
-      <Dialog defaultOpen={true} >
-        <DialogContent className='w-8/12 bg-white'>
-          <DialogHeader>
-            <DialogTitle>Create a new scene</DialogTitle>
-            <DialogDescription>Set new scene dimensions.</DialogDescription>
-          </DialogHeader>
+    <div className='w-full min-h-screen flex flex-col items-center justify-center bg-stone-700'>
+      <Card className='w-4/12' >
+        <CardContent className=' bg-white'>
+          <CardHeader>
+            <CardTitle>Create a new scene</CardTitle>
+            <CardDescription>Set new scene dimensions.</CardDescription>
+          </CardHeader>
           <form className='w-full' onSubmit={createNewScene}>
             <div className='flex w-full gap-2'>
               <div className='w-2/5 flex flex-col'>
@@ -32,8 +31,8 @@ function New() {
               <button type='submit' className='px-4 py-2 shadow bg-stone-700 text-white rounded'>Create</button>
             </div>
           </form>
-        </DialogContent>
-      </Dialog>
+        </CardContent>
+      </Card>
     </div>
   )
 }

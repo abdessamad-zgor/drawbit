@@ -4,7 +4,7 @@ import { getId } from "@/lib/utils";
 import useScene from "./scene";
 
 function rmMod(x: number, mod: number) {
-  return Math.round(x) - Math.round(x) % mod
+  return Math.floor(x) - Math.floor(x) % mod
 }
 
 const useFrameDraw = (index: number, frame: FrameData) => {
@@ -20,7 +20,7 @@ const useFrameDraw = (index: number, frame: FrameData) => {
   }, [canvasRef.current]);
 
   useEffect(() => {
-    setZoomedUnit(Math.round(unit * (zoom / 100)));
+    setZoomedUnit(Math.floor(unit * (zoom / 100)));
   }, [zoom])
 
   useEffect(() => {
@@ -46,9 +46,9 @@ const useFrameDraw = (index: number, frame: FrameData) => {
       canvasContext.clearRect(x, y, zoomedUnit * (strokeSize), zoomedUnit * (strokeSize))
     }
 
-    let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
+    let [xInd, yInd] = [Math.floor(x / zoomedUnit), Math.floor(y / zoomedUnit)];
     setFrame(index, [xInd, yInd])
-  }, [setIsStroke, setFrame, index, zoomedUnit, color, strokeSize])
+  }, [setIsStroke, setFrame, index, zoom, zoomedUnit, color, strokeSize])
 
   // end a stroke
   const onMouseUp: MouseEventHandler<HTMLDivElement> = (e) => setIsStroke(false)
@@ -70,10 +70,10 @@ const useFrameDraw = (index: number, frame: FrameData) => {
         canvasContext.clearRect(x, y, zoomedUnit * (strokeSize), zoomedUnit * (strokeSize))
       }
 
-      let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
+      let [xInd, yInd] = [Math.floor(x / zoomedUnit), Math.floor(y / zoomedUnit)];
       setFrame(index, [xInd, yInd])
     }
-  }, [isStroke, setFrame, index, zoomedUnit, color, strokeSize])
+  }, [isStroke, setFrame, index, zoom, zoomedUnit, color, strokeSize])
 
   const drawFrame = useCallback((data: FrameData) => {
     let context = canvasRef.current.getContext("2d");
@@ -86,7 +86,7 @@ const useFrameDraw = (index: number, frame: FrameData) => {
         }
       }
     }
-  }, [demX, demY, zoomedUnit])
+  }, [demX, demY, zoomedUnit, zoom])
 
   return {
     startStroke: onMouseDown,

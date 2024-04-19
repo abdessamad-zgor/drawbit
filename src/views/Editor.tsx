@@ -8,7 +8,7 @@ function Editor() {
   return (
     <div className='relative w-full h-[100vh] bg-stone-200 flex flex-col justify-between items-center overflow-hidden'>
       <EditorBar />
-      <div className='w-full overflow-scroll '>
+      <div className='w-full flex overflow-scroll justify-center px-12'>
         <Scene />
       </div>
       <Toolbar />
