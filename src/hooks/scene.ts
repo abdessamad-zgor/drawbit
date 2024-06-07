@@ -34,7 +34,7 @@ const useScene = () => {
   // negative value indicate the direction of change
   const updateZoom: (i: number) => MouseEventHandler<HTMLButtonElement> = (i: number) => {
     return (e) => {
-      s.setZoom(zoom + (i > 0 ? 5 : -5))
+      s.setZoom(zoom + (i > 0 ? 1 : -1))
     }
   }
 

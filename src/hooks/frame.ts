@@ -46,7 +46,7 @@ const useFrameDraw = (index: number, frame: FrameData) => {
       canvasContext.clearRect(x, y, zoomedUnit * (strokeSize), zoomedUnit * (strokeSize))
     }
 
-    let [xInd, yInd] = [Math.floor(x / zoomedUnit), Math.floor(y / zoomedUnit)];
+    let [xInd, yInd] = [Math.ceil(x / zoomedUnit), Math.ceil(y / zoomedUnit)];
     setFrame(index, [xInd, yInd])
   }, [setIsStroke, setFrame, index, zoom, zoomedUnit, color, strokeSize])
 

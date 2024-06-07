@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import EditorBar from '../components/EditorBar'
 import Scene from '../components/Scene'
 import Toolbar from '../components/Toolbar'
+import ZoomController from '@/components/ZoomController'
 
 function Editor() {
 
@@ -12,6 +13,7 @@ function Editor() {
         <Scene />
         <Toolbar />
       </div>
+      <ZoomController />
     </div>
   )
 }
