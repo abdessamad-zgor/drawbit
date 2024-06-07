@@ -6,12 +6,12 @@ import Toolbar from '../components/Toolbar'
 function Editor() {
 
   return (
-    <div className='relative w-full h-[100vh] bg-stone-200 flex flex-col justify-between items-center overflow-hidden'>
+    <div className='relative w-full h-[100vh] bg-zinc-300 flex flex-col justify-between items-center overflow-hidden'>
       <EditorBar />
-      <div className='w-full flex overflow-scroll justify-center px-12'>
+      <div className='w-full relative flex overflow-scroll justify-center px-12'>
         <Scene />
+        <Toolbar />
       </div>
-      <Toolbar />
     </div>
   )
 }
